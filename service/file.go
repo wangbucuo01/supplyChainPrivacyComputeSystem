@@ -1,0 +1,48 @@
+package service
+
+import (
+	"fmt"
+	"io"
+	"math/rand"
+	"os"
+	"strings"
+	"supplyChainPrivacyComputeSystem/utils"
+	"time"
+
+	"github.com/gin-gonic/gin"
+)
+
+func Upload(c *gin.Context) {
+	//上传到本地
+	UploadLocal(c)
+	// TODO 上传到阿里云OSS
+	// UploadOSS(c)
+}
+
+func UploadLocal(c *gin.Context) {
+	w := c.Writer
+	req := c.Request
+	srcFile, head, err := req.FormFile("file")
+	if err != nil {
+		utils.RespFail(w, err.Error())
+		return
+	}
+	suffix := ".txt"
+	ofilName := head.Filename
+	temp := strings.Split(ofilName, ".")
+	if len(temp) > 1 {
+		suffix = "." + temp[len(temp)-1]
+	}
+	fileName := fmt.Sprintf("%d%04d%s", time.Now().Unix(), rand.Int31(), suffix)
+	dstFile, err := os.Create("./data/" + fileName)
+	if err != nil {
+		utils.RespFail(w, err.Error())
+		return
+	}
+	_, err = io.Copy(dstFile, srcFile)
+	if err != nil {
+		utils.RespFail(w, err.Error())
+	}
+	url := "./data/" + fileName
+	utils.RespOK(w, url, "上传文件成功!")
+}
