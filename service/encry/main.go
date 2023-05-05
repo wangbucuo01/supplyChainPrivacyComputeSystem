@@ -1,4 +1,4 @@
-package encrypart
+package main
 
 import (
 	"crypto/rand"
@@ -51,11 +51,15 @@ func fileRead(path string) ([]int, error) {
 		return []int{}, err
 	}
 
-	res := strings.Split(string(data), "\r\n")
+	res := strings.Split(string(data), "\n")
 	resInts := []int{}
 	for _, v := range res {
 		v, _ := strconv.Atoi(v)
 		resInts = append(resInts, v)
 	}
 	return resInts, nil
+}
+
+func main() {
+	compute("./test.txt")
 }

@@ -13,9 +13,7 @@ func Router() *gin.Engine {
 	// 上传文件
 	r.POST("/supplychain/file/upload", service.Upload)
 
-
-
-	// r.GET("/supplychain/rawdata", service.GetRawData)
+	r.GET("/supplychain/rawdata", service.GetRawData)
 
 	return r
 }

@@ -3,8 +3,10 @@ package service
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"math/rand"
 	"os"
+	"strconv"
 	"strings"
 	"supplyChainPrivacyComputeSystem/utils"
 	"time"
@@ -44,5 +46,30 @@ func UploadLocal(c *gin.Context) {
 		utils.RespFail(w, err.Error())
 	}
 	url := "./data/" + fileName
-	utils.RespOK(w, url, "上传文件成功!")
+	// read file
+	fileContent, err := FileRead(url)
+	if err != nil {
+		// TODO:封装errors
+		fmt.Println("read file error:", err)
+		return 
+	}
+
+	fmt.Println("提交的明文为：", fileContent)
+	utils.RespOK(w, fileContent, "上传文件成功!")
+}
+
+// 业务逻辑01 读取文件
+func FileRead(path string) ([]int, error) {
+	data, err := ioutil.ReadFile(path)
+	if err != nil {
+		return []int{}, err
+	}
+
+	res := strings.Split(string(data), "\n")
+	resInts := []int{}
+	for _, v := range res {
+		v, _ := strconv.Atoi(v)
+		resInts = append(resInts, v)
+	}
+	return resInts, nil
 }
