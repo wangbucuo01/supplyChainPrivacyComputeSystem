@@ -1,0 +1,2 @@
+mysql:
+  dns: root:mysql123@tcp(127.0.0.1:3306)/CarbonBasic?charset=utf8mb4&parseTime=True&loc=Local #需要替换Mysql密码

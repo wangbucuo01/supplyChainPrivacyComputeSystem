@@ -13,6 +13,9 @@ func Router() *gin.Engine {
 	// 上传文件
 	r.POST("/supplychain/file/upload", service.Upload)
 
+	// 用户模块
+	r.POST("/supplychain/user/create", service.CreateUser)
+
 	r.GET("/supplychain/rawdata", service.GetRawData)
 
 	return r

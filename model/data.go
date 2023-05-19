@@ -6,6 +6,21 @@ import (
 	"strings"
 )
 
+type Data struct {
+	ID         int    `json:"id"`
+	PlainText  string `json:"plaintext"`
+	CipherText string `json:"ciphertext"`
+	UploadDate string `json:"upload_date"`
+	State      int    `json:"state"`
+	UID        int    `json:"uid"`
+	Proof      string `json:"proof"`
+	DataDesc   string `json:"data_desc"`
+}
+
+func (d Data) TableName() string {
+	return "data"
+}
+
 type DataBasic []int
 
 func GetRawData() (DataBasic, error) {
