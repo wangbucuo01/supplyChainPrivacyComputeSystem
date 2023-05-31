@@ -3,7 +3,7 @@ use CarbonBasic;
 
 create table user(
 	uid int not null auto_increment comment '用户ID',
-	username varchar(255) not null comment '用户名',
+	user_name varchar(255) not null comment '用户名',
 	passwd varchar(255) not null comment '密码',
 	identity int not null comment '用户身份',
 	state int not null comment '用户状态',
@@ -13,8 +13,8 @@ create table user(
 
 create table data(
 	id int not null auto_increment comment '数据ID',
-	plaintext varchar(255) not null comment '明文',
-	ciphertext varchar(255) not null comment '密文',
+	plain_text varchar(255) not null comment '明文',
+	cipher_text varchar(255) not null comment '密文',
 	upload_date datetime not null comment '上传时间',
 	state int not null comment '状态',
 	uid int not null comment '上传者id',

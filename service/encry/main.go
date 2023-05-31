@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	paillier "github.com/roasbeef/go-go-gadget-paillier"
+	"supplyChainPrivacyComputeSystem/algorithm"
 )
 
 func compute(path string) string {
@@ -23,22 +23,22 @@ func compute(path string) string {
 	fmt.Println("提交的明文为：", fileContent)
 
 	// Generate a 128-bit private key.
-	privKey, _ := paillier.GenerateKey(rand.Reader, 128)
+	privKey, _ := algorithm.GenerateKey(rand.Reader, 128)
 
 	// read every numbers and encrypt this
 	fileContentEnc := [][]byte{}
 	sum := new(big.Int).SetInt64(int64(0))
-	sumC, _ := paillier.Encrypt(&privKey.PublicKey, sum.Bytes())
+	sumC, _ := algorithm.Encrypt(&privKey.PublicKey, sum.Bytes())
 	for i := 0; i < len(fileContent); i++ {
 		m := new(big.Int).SetInt64(int64(fileContent[i]))
-		c, _ := paillier.Encrypt(&privKey.PublicKey, m.Bytes())
+		c, _ := algorithm.Encrypt(&privKey.PublicKey, m.Bytes())
 		fileContentEnc = append(fileContentEnc, c)
 
-		sumC = paillier.AddCipher(&privKey.PublicKey, c, sumC)
+		sumC = algorithm.AddCipher(&privKey.PublicKey, c, sumC)
 	}
 
 	fmt.Println("加密后的密文数据为：", fileContentEnc)
-	decryptedAddition, _ := paillier.Decrypt(privKey, sumC)
+	decryptedAddition, _ := algorithm.Decrypt(privKey, sumC)
 	fmt.Println("解密后的计算结果为: ", new(big.Int).SetBytes(decryptedAddition).String())
 	res := new(big.Int).SetBytes(decryptedAddition).String()
 	return res

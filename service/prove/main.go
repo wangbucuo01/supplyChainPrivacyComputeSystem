@@ -12,9 +12,9 @@ import (
 // CubicCircuit defines a simple circuit
 // x < 100  x > 0
 type CubicCircuit struct {
-	X frontend.Variable `gnark:"x"`        // 输入值
-	Y frontend.Variable `gnark:",public"`  // 最小值
-	Z frontend.Variable `gnark:",public"`  // 最大值
+	X frontend.Variable `gnark:"x"`       // 输入值
+	Y frontend.Variable `gnark:",public"` // 最小值
+	Z frontend.Variable `gnark:",public"` // 最大值
 }
 
 // Define declares the circuit constraints
@@ -35,7 +35,7 @@ func main() {
 
 	// witness definition
 	assignment := CubicCircuit{
-		X: 10,
+		X: 120,
 		Y: 0,
 		Z: 100,
 	}

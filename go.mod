@@ -6,7 +6,6 @@ require (
 	github.com/consensys/gnark v0.8.0
 	github.com/consensys/gnark-crypto v0.9.1
 	github.com/gin-gonic/gin v1.9.0
-	github.com/roasbeef/go-go-gadget-paillier v0.0.0-20181009074315-14f1f86b6000
 	github.com/spf13/viper v1.15.0
 	gorm.io/driver/mysql v1.5.0
 	gorm.io/gorm v1.25.1

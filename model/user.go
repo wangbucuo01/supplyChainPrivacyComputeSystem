@@ -8,7 +8,7 @@ import (
 
 type User struct {
 	UID      int    `json:"uid"`
-	UserName string `json:"username"`
+	UserName string `json:"user_name"`
 	Passwd   string `json:"passwd"`
 	Identity int    `json:"identity"`
 	State    int    `json:"state"`
@@ -25,6 +25,19 @@ func CreateUser(user User) *gorm.DB {
 
 func FindUserByName(name string) User {
 	user := User{}
-	utils.DB.Where("username = ?", name).First(&user)
+	utils.DB.Where("user_name = ?", name).First(&user)
+	return user
+}
+
+func FindUserByNameAndPasswd(name, passwd string) User {
+	user := User{}
+	utils.DB.Where("user_name = ? and passwd = ?", name, passwd).First(&user)
+	return user
+}
+
+
+func FindUserByID(userId int) User {
+	user := User{}
+	utils.DB.Where("uid = ?", userId).First(&user)
 	return user
 }
